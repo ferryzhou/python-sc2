@@ -73,7 +73,7 @@ class WarpGateBot(BotAI):
             # Build up to 4 gates
             if (
                 self.can_afford(UnitTypeId.GATEWAY)
-                and self.structures(UnitTypeId.WARPGATE).amount + self.structures(UnitTypeId.GATEWAY).amount < 4
+                and self.structures(UnitTypeId.WARPGATE).amount + self.structures(UnitTypeId.GATEWAY).amount < 6
             ):
                 await self.build(UnitTypeId.GATEWAY, near=pylon)
 
@@ -107,7 +107,7 @@ class WarpGateBot(BotAI):
             await self.warp_new_units(proxy)
 
         # Make stalkers attack either closest enemy unit or enemy spawn location
-        if self.units(UnitTypeId.STALKER).amount > 3:
+        if self.units(UnitTypeId.STALKER).amount > 12:
             for stalker in self.units(UnitTypeId.STALKER).ready.idle:
                 targets = (self.enemy_units | self.enemy_structures).filter(lambda unit: unit.can_be_attacked)
                 if targets:
@@ -139,8 +139,8 @@ class WarpGateBot(BotAI):
 
 def main():
     run_game(
-        maps.get("(2)CatalystLE"),
-        [Bot(Race.Protoss, WarpGateBot()), Computer(Race.Protoss, Difficulty.Easy)],
+        maps.get("CatalystLE"),
+        [Bot(Race.Protoss, WarpGateBot()), Computer(Race.Protoss, Difficulty.Harder)],
         realtime=False,
     )
 
